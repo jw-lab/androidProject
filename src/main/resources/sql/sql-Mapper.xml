@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitc.mapper.TownMapper">
+	<select id="selectTownBoardList" resultType="com.bitc.dto.TownBoardDto">
+	
+		<![CDATA[ 
+			SELECT
+			 * 
+			FROM
+			 town_board	
+					
+		]]>
+		
+	</select>
+	
+	
+	<insert id="writeBoard" parameterType="com.bitc.dto.TownBoardDto">
+		<![CDATA[ 
+			INSERT INTO
+				town_board(created_user,user_address,contents,created_dt)
+			VALUES
+				(#{createdUser},#{userAddress},#{contents},NOW())
+		]]>
+		
+	</insert>
+	
+	<delete id="deleteBoard" parameterType="int">
+		<![CDATA[ 
+			DELETE FROM
+				town_board
+			WHERE
+				idx=#{idx}	
+		]]>
+	</delete>
+	<select id="selectTownCommentList" resultType="com.bitc.dto.TownCommentDto">
+	
+		<![CDATA[ 
+			SELECT
+				*
+			FROM
+				town_comment
+			ORDER BY
+				origin_num DESC,group_ord DESC	
+					
+		]]>
+	</select >
+	
+	<insert id="writeComment" parameterType="com.bitc.dto.TownCommentDto">
+		<![CDATA[ 
+			INSERT INTO
+				town_comment(created_user,board_key,user_address,comments,created_dt,origin_num)
+			VALUES
+				(#{createdUser},#{boardKey},#{userAddress},#{comment},NOW(),origin_num+1)
+		]]>
+		
+	</insert>
+</mapper>

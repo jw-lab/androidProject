@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitc.mapper.MarketMapper">
+
+<!-- , local -->
+	<select id="selectMarketList" resultType="com.bitc.dto.BoardDto">
+	<![CDATA[ 
+		SELECT 
+			seq, title, price, local
+		FROM 
+			board 
+		ORDER BY seq DESC
+	]]>
+	</select>
+	
+
+	<insert id="insertMarket" parameterType="com.bitc.dto.BoardDto" >
+		<![CDATA[ 
+			INSERT INTO board 
+				(title, price,contents, local)
+			VALUES 
+				(#{title}, #{price}, #{contents},#{local})
+		]]>
+	</insert>
+	
+	
+	<!--, local-->
+	<select id="selectMarketDetail" resultType="com.bitc.dto.BoardDto">
+	<![CDATA[ 
+		SELECT 
+			seq, title, price,local
+		FROM 
+			board 
+		WHERE 
+			seq = #{seq}
+		AND
+			deleted_yn = 'N'
+	]]>
+
+	</select>
+	
+	<update id="deleteMarket" parameterType="int">
+		<![CDATA[ 
+			UPDATE 
+				board 
+			SET 
+				deleted_yn ='Y' 
+			WHERE 
+				seq=#{seq}
+		]]>
+	</update>
+	
+	<update id="updateMarket" parameterType="com.bitc.dto.BoardDto">
+		<![CDATA[ 
+			UPDATE 
+				board 
+			SET 			
+				title= #{title}, price= #{price}, local= #{local}
+			WHERE 
+				seq= #{seq}
+		]]>
+	</update>
+	
+
+
+</mapper>
